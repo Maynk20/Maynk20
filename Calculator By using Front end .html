@@ -1,0 +1,224 @@
+
+<!-- We are going to make a calculator 
+ is known as web calculator. It is use for exmaple of code how things and Arithmetic operation are work.-->
+
+<!-- This is not normal calculator but it is a web calculator. It is support only by interpetreter like chrome, firefox, etc. and it will be access by any code editor like vscode, Notepad++. -->
+  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Calculator </title>
+
+    <!-- Here the start of cascading style sheet (CSS) -->
+<div>
+  <style>
+
+.h1{
+    text-align: center;
+    text-decoration: underline;
+    text-underline-offset: 5px;
+    font-size: 40px;
+    font-family: 'Times New Roman', Times, serif;
+   -ms-text-size-adjust: inherit;
+    position: absolute;
+    top: 0%;
+}
+
+    body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.calculator {
+    width: 320px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+#display {
+    width: 100%;
+    height: 50px;
+    margin-bottom: 10px;
+    text-align: right;
+    font-size: 24px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.button {
+    height: 50px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #ddd;
+}
+
+.operator {
+    background-color: #f9a825;
+    color: #fff;
+}
+
+.operator:hover {
+    background-color: #f57f17;
+}
+
+.clear {
+    background-color: #d32f2f;
+    color: #fff;
+}
+
+.clear:hover {
+    background-color: #c62828;
+}
+
+.backspace {
+    background-color: #1976d2;
+    color: #fff;
+}
+
+.backspace:hover {
+    background-color: #1565c0;
+}
+
+.equals {
+    background-color: #388e3c;
+    color: #fff;
+    grid-column: span 2;
+}
+
+.equals:hover {
+    background-color: #2e7d32;
+}
+  </style>
+  </div>
+</head>
+<h1 class="h1"> Calculator </h1>
+            <!-- Here are the start of HTML5 program. -->
+            <body>
+          
+                <div class="calculator">
+                    <input type="text" id="display" disabled>
+                    <div class="buttons">
+                        <button class="button" onclick="appendNumber('1')">1</button>
+                        <button class="button" onclick="appendNumber('2')">2</button>
+                        <button class="button" onclick="appendNumber('3')">3</button>
+                        <button class="button" onclick="appendNumber('4')">4</button>
+                        <button class="button" onclick="appendNumber('5')">5</button>
+                        <button class="button" onclick="appendNumber('6')">6</button>
+                        <button class="button" onclick="appendNumber('7')">7</button>
+                        <button class="button" onclick="appendNumber('8')">8</button>
+                        <button class="button" onclick="appendNumber('9')">9</button>
+                        <button class="button" onclick="appendNumber('0')">0</button>
+                        <button class="button operator" onclick="appendOperator('+')">+</button>
+                        <button class="button operator" onclick="appendOperator('-')">-</button>
+                        <button class="button operator" onclick="appendOperator('*')">*</button>
+                        <button class="button operator" onclick="appendOperator('/')">/</button>
+                        <button class="button clear" onclick="clearDisplay()">Clear</button>
+                        <button class="button backspace" onclick="backspace()">Del</button>
+                        <button class="button equals" onclick="calculate()">=</button>
+                    </div>
+                </div>
+
+                <!-- Here are the start of the Javascript programm-->
+<div>
+                <script>
+let display = document.getElementById('display');
+let currentNumber = '';
+let previousNumber = '';
+let operator = '';
+
+function clearDisplay() {
+  display.value = '';
+  currentNumber = '';
+  previousNumber = '';
+  operator = '';
+}
+
+function backspace() {
+  currentNumber = currentNumber.slice(0, -1);
+  display.value = currentNumber;
+}
+
+function appendNumber(number) {
+  currentNumber += number;
+  display.value = currentNumber;
+}
+
+function appendOperator(op) {
+  if (currentNumber === '') return;
+  if (previousNumber !== '') {
+    calculate();
+  }
+  operator = op;
+  previousNumber = currentNumber;
+  currentNumber = '';
+}
+
+function calculate() {
+  let result;
+  const prev = parseFloat(previousNumber);
+  const current = parseFloat(currentNumber);
+  if (isNaN(prev) || isNaN(current)) return;
+  switch (operator) {
+    case '+':
+      result = prev + current;
+      break;
+    case '-':
+      result = prev - current;
+      break;
+    case '*':
+      result = prev * current;
+      break;
+    case '/':
+      result = prev / current;
+      break;
+    default:
+      return;
+  }
+ 
+  currentNumber = result;
+  operator = '';
+  previousNumber = '';
+  display.value = result;
+}
+document.addEventListener('keydown', function(event) {
+  const key = event.key;
+  if (key >= '0' && key <= '9') {
+      appendNumber(key);
+  } else if (key === '+' || key === '-' || key === '*' || key === '/') {
+      appendOperator(key);
+  } else if (key === 'Enter') {
+      calculate();
+  } else if (key === 'Backspace') {
+      backspace();
+  } else if (key === 'Escape') {
+      clearDisplay();
+  }
+});
+            </script>
+</div>
+            </body>
+            </html>
+            <!--It is the end-->
+<!-- This calculator made by Mayank Thakkar -->
